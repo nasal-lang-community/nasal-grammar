@@ -1,0 +1,14 @@
+# Ignore certain ANTLR-related files
+*.java
+*.javac
+*.jar
+*.tokens
+*.interp
+
+# Ignore build artifacts
+/build/
+/dist/
+*.a
+*.o
+*.so
+
