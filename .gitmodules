@@ -1,0 +1,4 @@
+[submodule "tests/nasal-validation-tests"]
+	path = tests/nasal-validation-tests
+	url = git@github.com:nasal-lang-community/nasal-validation-tests
+	branch = main

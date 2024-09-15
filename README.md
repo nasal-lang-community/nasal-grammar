@@ -11,8 +11,14 @@ Please consider contributing to the development of the ANTLR grammar if you are 
 
 Right now the ANTLR grammar isn't ready for prime-time for use in other projects, so really the only usage workflow is working on the grammar itself. 
 
+To begin, ensure you clone this repository recursively:
 
-To start, ensure you have the following packages:
+```
+git clone --recursive git@github.com:nasal-lang-community/nasal-grammar
+```
+
+Next, ensure you have the following packages:
+
 ```
 sudo apt update
 sudo apt install build-essential cmake ninja-build gcc g++ default-jre

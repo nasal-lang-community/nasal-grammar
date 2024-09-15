@@ -4,6 +4,7 @@
 *.jar
 *.tokens
 *.interp
+*.class
 
 # Ignore build artifacts
 /build/
