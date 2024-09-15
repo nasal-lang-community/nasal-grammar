@@ -1,33 +1,138 @@
 grammar Nasal;
 
-// Lexer rules
-VAR: 'var';
-FUNC: 'func';
-IF: 'if';
-ELSE: 'else';
-RETURN: 'return';
-NUMBER: [0-9]+;
-STRING: '"' .*? '"';
-ID: [a-zA-Z_][a-zA-Z_0-9]*;
-WS: [ \t\n\r]+ -> skip;
+// Parser Rules
 
-// Parser rules
-program: statement* EOF;
+program
+    : statement* EOF
+    ;
 
 statement
     : varDeclaration
-    | funcDeclaration
-    | ifStatement
+    | assignment
+    | expressionStatement
     | returnStatement
+    | ifStatement
     ;
 
-varDeclaration: VAR ID ('=' expression)? ';';
-funcDeclaration: FUNC ID '(' (ID (',' ID)*)? ')' '{' statement* '}';
-ifStatement: IF '(' expression ')' statement (ELSE statement)?;
-returnStatement: RETURN expression ';';
+varDeclaration
+    : VAR ID ASSIGN expression SEMICOLON
+    ;
+
+assignment
+    : ID ASSIGN expression SEMICOLON
+    ;
+
+expressionStatement
+    : expression SEMICOLON
+    ;
+
+returnStatement
+    : RETURN expression? SEMICOLON
+    ;
+
+ifStatement
+    : IF LPAREN expression RPAREN block (elsifStatement)* (elseStatement)?
+    ;
+
+elsifStatement
+    : ELSIF LPAREN expression RPAREN block
+    ;
+
+elseStatement
+    : ELSE block
+    ;
 
 expression
-    : NUMBER
-    | STRING
-    | ID
+    : functionExpression
+    | simpleExpression
+    | assignmentExpression
     ;
+
+functionExpression
+    : FUNC LPAREN parameterList? RPAREN block
+    ;
+
+parameterList
+    : ID (COMMA ID)*
+    ;
+
+block
+    : LBRACE statement* RBRACE
+    ;
+
+simpleExpression
+    : literal
+    | ID
+    | LPAREN expression RPAREN
+    | simpleExpression binaryOperator simpleExpression
+    | NOT simpleExpression
+    ;
+
+assignmentExpression
+    : ID ASSIGN simpleExpression
+    ;
+
+literal
+    : booleanLiteral
+    | NUMBER
+    | STRING
+    | NIL
+    ;
+
+booleanLiteral
+    : TRUE
+    | FALSE
+    ;
+
+binaryOperator
+    : PLUS
+    | MINUS
+    | MULT
+    | DIV
+    | EQ
+    | NEQ
+    | GT
+    | LT
+    | GTE
+    | LTE
+    ;
+
+// Lexer Rules
+
+VAR: 'var';
+FUNC: 'func';
+IF: 'if';
+ELSIF: 'elsif';
+ELSE: 'else';
+RETURN: 'return';
+TRUE: 'true';
+FALSE: 'false';
+NIL: 'nil';
+
+ID: [a-zA-Z_][a-zA-Z_0-9]*;
+
+NUMBER: [0-9]+;
+STRING: '"' .*? '"';
+WS: [ \t\n\r]+ -> skip;
+
+ASSIGN: '=';
+PLUS: '+';
+MINUS: '-';
+MULT: '*';
+DIV: '/';
+EQ: '==';
+NEQ: '!=';
+GT: '>';
+LT: '<';
+GTE: '>=';
+LTE: '<=';
+NOT: '!';
+
+LPAREN: '(';
+RPAREN: ')';
+LBRACE: '{';
+RBRACE: '}';
+SEMICOLON: ';';
+COMMA: ',';
+
+COMMENT: '#' ~[\r\n]* -> skip;

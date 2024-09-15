@@ -12,9 +12,11 @@
 class  NasalLexer : public antlr4::Lexer {
 public:
   enum {
-    T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7, 
-    VAR = 8, FUNC = 9, IF = 10, ELSE = 11, RETURN = 12, NUMBER = 13, STRING = 14, 
-    ID = 15, WS = 16
+    VAR = 1, FUNC = 2, IF = 3, ELSIF = 4, ELSE = 5, RETURN = 6, TRUE = 7, 
+    FALSE = 8, NIL = 9, ID = 10, NUMBER = 11, STRING = 12, WS = 13, ASSIGN = 14, 
+    PLUS = 15, MINUS = 16, MULT = 17, DIV = 18, EQ = 19, NEQ = 20, GT = 21, 
+    LT = 22, GTE = 23, LTE = 24, NOT = 25, LPAREN = 26, RPAREN = 27, LBRACE = 28, 
+    RBRACE = 29, SEMICOLON = 30, COMMA = 31, COMMENT = 32
   };
 
   explicit NasalLexer(antlr4::CharStream *input);

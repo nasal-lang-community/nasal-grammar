@@ -23,17 +23,50 @@ public:
   virtual void enterVarDeclaration(NasalParser::VarDeclarationContext *ctx) = 0;
   virtual void exitVarDeclaration(NasalParser::VarDeclarationContext *ctx) = 0;
 
-  virtual void enterFuncDeclaration(NasalParser::FuncDeclarationContext *ctx) = 0;
-  virtual void exitFuncDeclaration(NasalParser::FuncDeclarationContext *ctx) = 0;
+  virtual void enterAssignment(NasalParser::AssignmentContext *ctx) = 0;
+  virtual void exitAssignment(NasalParser::AssignmentContext *ctx) = 0;
 
-  virtual void enterIfStatement(NasalParser::IfStatementContext *ctx) = 0;
-  virtual void exitIfStatement(NasalParser::IfStatementContext *ctx) = 0;
+  virtual void enterExpressionStatement(NasalParser::ExpressionStatementContext *ctx) = 0;
+  virtual void exitExpressionStatement(NasalParser::ExpressionStatementContext *ctx) = 0;
 
   virtual void enterReturnStatement(NasalParser::ReturnStatementContext *ctx) = 0;
   virtual void exitReturnStatement(NasalParser::ReturnStatementContext *ctx) = 0;
 
+  virtual void enterIfStatement(NasalParser::IfStatementContext *ctx) = 0;
+  virtual void exitIfStatement(NasalParser::IfStatementContext *ctx) = 0;
+
+  virtual void enterElsifStatement(NasalParser::ElsifStatementContext *ctx) = 0;
+  virtual void exitElsifStatement(NasalParser::ElsifStatementContext *ctx) = 0;
+
+  virtual void enterElseStatement(NasalParser::ElseStatementContext *ctx) = 0;
+  virtual void exitElseStatement(NasalParser::ElseStatementContext *ctx) = 0;
+
   virtual void enterExpression(NasalParser::ExpressionContext *ctx) = 0;
   virtual void exitExpression(NasalParser::ExpressionContext *ctx) = 0;
+
+  virtual void enterFunctionExpression(NasalParser::FunctionExpressionContext *ctx) = 0;
+  virtual void exitFunctionExpression(NasalParser::FunctionExpressionContext *ctx) = 0;
+
+  virtual void enterParameterList(NasalParser::ParameterListContext *ctx) = 0;
+  virtual void exitParameterList(NasalParser::ParameterListContext *ctx) = 0;
+
+  virtual void enterBlock(NasalParser::BlockContext *ctx) = 0;
+  virtual void exitBlock(NasalParser::BlockContext *ctx) = 0;
+
+  virtual void enterSimpleExpression(NasalParser::SimpleExpressionContext *ctx) = 0;
+  virtual void exitSimpleExpression(NasalParser::SimpleExpressionContext *ctx) = 0;
+
+  virtual void enterAssignmentExpression(NasalParser::AssignmentExpressionContext *ctx) = 0;
+  virtual void exitAssignmentExpression(NasalParser::AssignmentExpressionContext *ctx) = 0;
+
+  virtual void enterLiteral(NasalParser::LiteralContext *ctx) = 0;
+  virtual void exitLiteral(NasalParser::LiteralContext *ctx) = 0;
+
+  virtual void enterBooleanLiteral(NasalParser::BooleanLiteralContext *ctx) = 0;
+  virtual void exitBooleanLiteral(NasalParser::BooleanLiteralContext *ctx) = 0;
+
+  virtual void enterBinaryOperator(NasalParser::BinaryOperatorContext *ctx) = 0;
+  virtual void exitBinaryOperator(NasalParser::BinaryOperatorContext *ctx) = 0;
 
 
 };

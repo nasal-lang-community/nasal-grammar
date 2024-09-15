@@ -5,11 +5,11 @@
 #include <iostream>
 #include <gtest/gtest.h>
 
-void parseNasalScript(const std::string& fileName) {
+void parseNasalScript(const std::string& fileName, NasalParser& parser) {
     std::ifstream stream(fileName);
     if (!stream.is_open()) {
         std::cerr << "Could not open file: " << fileName << std::endl;
-        return;
+        throw std::runtime_error("Could not open file");
     }
 
     // Create an input stream for the script
@@ -19,31 +19,144 @@ void parseNasalScript(const std::string& fileName) {
     NasalLexer lexer(&input);
     antlr4::CommonTokenStream tokens(&lexer);
 
-    // Create the parser
-    NasalParser parser(&tokens);
+    // Assign the token stream to the parser
+    parser.setTokenStream(&tokens);
 
     // Parse the script (using the top-level rule from your grammar)
     NasalParser::ProgramContext* tree = parser.program();
-
-    // Display the parse tree
-    std::cout << "Parse successful for file: " << fileName << std::endl;
-    std::cout << "Parse tree: " << tree->toStringTree(&parser) << std::endl;
-
-    // Check for lexer errors
-    ASSERT_EQ(lexer.getNumberOfSyntaxErrors(), 0) << "Lexer encountered syntax errors.";
-
-    // Check for parser errors
-    ASSERT_EQ(parser.getNumberOfSyntaxErrors(), 0) << "Parser encountered syntax errors.";
 
     // Optionally check the parse tree
     ASSERT_NE(tree, nullptr) << "Parse tree is null.";
 }
 
-// Use Google Test's TEST macro for defining the test
-TEST(NasalParserTest, TestNasalScriptParsing) {
-    // Path to the test script (adjust if necessary)
-    std::string testScriptPath = "../tests/test_script.nas";
+TEST(NasalParserTest, TestValidBooleanUsage1) {
+    antlr4::CommonTokenStream tokens(nullptr);
+    NasalParser parser(&tokens);
 
-    // Parse the test script and ensure it doesn't crash or produce errors
-    parseNasalScript(testScriptPath);
+    parseNasalScript("../tests/nasal-validation-tests/booleans/valid_boolean_usage_1.nas", parser);
+
+    ASSERT_EQ(parser.getNumberOfSyntaxErrors(), 0);
+}
+
+TEST(NasalParserTest, TestValidBooleanUsage2) {
+    antlr4::CommonTokenStream tokens(nullptr);
+    NasalParser parser(&tokens);
+
+    parseNasalScript("../tests/nasal-validation-tests/booleans/valid_boolean_usage_2.nas", parser);
+
+    ASSERT_EQ(parser.getNumberOfSyntaxErrors(), 0);
+}
+
+TEST(NasalParserTest, TestValidBooleanUsage3) {
+    antlr4::CommonTokenStream tokens(nullptr);
+    NasalParser parser(&tokens);
+
+    parseNasalScript("../tests/nasal-validation-tests/booleans/valid_boolean_usage_3.nas", parser);
+
+    ASSERT_EQ(parser.getNumberOfSyntaxErrors(), 0);
+}
+
+TEST(NasalParserTest, TestValidBooleanUsage4) {
+    antlr4::CommonTokenStream tokens(nullptr);
+    NasalParser parser(&tokens);
+
+    parseNasalScript("../tests/nasal-validation-tests/booleans/valid_boolean_usage_4.nas", parser);
+
+    ASSERT_EQ(parser.getNumberOfSyntaxErrors(), 0);
+}
+
+// Invalid usages of boolean 
+
+TEST(NasalParserTest, TestInvalidBooleanUsage1) {
+    antlr4::CommonTokenStream tokens(nullptr);
+    NasalParser parser(&tokens);
+
+    parseNasalScript("../tests/nasal-validation-tests/booleans/invalid_boolean_usage_1.nas", parser);
+
+    ASSERT_EQ(parser.getNumberOfSyntaxErrors(), 1);
+}
+
+TEST(NasalParserTest, TestInvalidBooleanUsage2) {
+    antlr4::CommonTokenStream tokens(nullptr);
+    NasalParser parser(&tokens);
+
+    parseNasalScript("../tests/nasal-validation-tests/booleans/invalid_boolean_usage_2.nas", parser);
+
+    ASSERT_EQ(parser.getNumberOfSyntaxErrors(), 1);
+}
+
+// Valid assignment tests
+
+TEST(NasalParserTest, TestValidAssignment1) {
+    antlr4::CommonTokenStream tokens(nullptr);
+    NasalParser parser(&tokens);
+
+    parseNasalScript("../tests/nasal-validation-tests/assignment/valid_assignment_1.nas", parser);
+
+    ASSERT_EQ(parser.getNumberOfSyntaxErrors(), 0);
+}
+
+TEST(NasalParserTest, TestValidAssignment2) {
+    antlr4::CommonTokenStream tokens(nullptr);
+    NasalParser parser(&tokens);
+
+    parseNasalScript("../tests/nasal-validation-tests/assignment/valid_assignment_2.nas", parser);
+
+    ASSERT_EQ(parser.getNumberOfSyntaxErrors(), 0);
+}
+
+TEST(NasalParserTest, TestValidAssignment3) {
+    antlr4::CommonTokenStream tokens(nullptr);
+    NasalParser parser(&tokens);
+
+    parseNasalScript("../tests/nasal-validation-tests/assignment/valid_assignment_3.nas", parser);
+
+    ASSERT_EQ(parser.getNumberOfSyntaxErrors(), 0);
+}
+
+TEST(NasalParserTest, TestValidAssignment4) {
+    antlr4::CommonTokenStream tokens(nullptr);
+    NasalParser parser(&tokens);
+
+    parseNasalScript("../tests/nasal-validation-tests/assignment/valid_assignment_4.nas", parser);
+
+    ASSERT_EQ(parser.getNumberOfSyntaxErrors(), 0);
+}
+
+TEST(NasalParserTest, TestValidAssignment5) {
+    antlr4::CommonTokenStream tokens(nullptr);
+    NasalParser parser(&tokens);
+
+    parseNasalScript("../tests/nasal-validation-tests/assignment/valid_assignment_5.nas", parser);
+
+    ASSERT_EQ(parser.getNumberOfSyntaxErrors(), 0);
+}
+
+TEST(NasalParserTest, TestValidAssignment6) {
+    antlr4::CommonTokenStream tokens(nullptr);
+    NasalParser parser(&tokens);
+
+    parseNasalScript("../tests/nasal-validation-tests/assignment/valid_assignment_6.nas", parser);
+
+    ASSERT_EQ(parser.getNumberOfSyntaxErrors(), 0);
+}
+
+// Invalid assignment tests
+
+TEST(NasalParserTest, TestInvalidAssignment1) {
+    antlr4::CommonTokenStream tokens(nullptr);
+    NasalParser parser(&tokens);
+
+    parseNasalScript("../tests/nasal-validation-tests/assignment/invalid_assignment_1.nas", parser);
+
+    ASSERT_EQ(parser.getNumberOfSyntaxErrors(), 1);
+}
+
+TEST(NasalParserTest, TestInvalidAssignment2) {
+    antlr4::CommonTokenStream tokens(nullptr);
+    NasalParser parser(&tokens);
+
+    parseNasalScript("../tests/nasal-validation-tests/assignment/invalid_assignment_2.nas", parser);
+
+    ASSERT_EQ(parser.getNumberOfSyntaxErrors(), 1);
 }
